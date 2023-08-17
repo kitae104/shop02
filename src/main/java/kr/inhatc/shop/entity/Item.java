@@ -1,6 +1,7 @@
 package kr.inhatc.shop.entity;
 
 import jakarta.persistence.*;
+import kr.inhatc.shop.constant.ItemSellStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,9 @@ public class Item {
     @Lob // Large Object - CLOB, BLOB
     @Column(nullable = false)
     private String itemDetail;   // 상품 상세 설명
+
+    @Enumerated(EnumType.STRING)
+    private ItemSellStatus itemSellStatus;
 
     private LocalDateTime regTime;      // 등록일 (추후 제거)
     private LocalDateTime updateTime;   // 수정일 (추후 제거)
