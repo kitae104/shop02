@@ -1,6 +1,7 @@
 package kr.inhatc.shop.repository;
 
 import kr.inhatc.shop.entity.Item;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -24,4 +25,6 @@ public interface ItemRepository extends JpaRepository<Item, Long>,
 
     @Query(value="select * from item i where i.item_detail like %:itemDetail% order by i.price asc", nativeQuery = true)
     List<Item> findByItemDetailNative(@Param("itemDetail") String itemDetail);
+
+
 }

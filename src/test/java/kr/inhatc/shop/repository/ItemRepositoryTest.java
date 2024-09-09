@@ -28,6 +28,9 @@ class ItemRepositoryTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private JPAQueryFactory jpaQueryFactory;
+
     public void createItemList(){
         for(int i=1; i<=10; i++){
             Item item = new Item();
@@ -161,7 +164,7 @@ class ItemRepositoryTest {
         createItemList2();
 
         String itemDetail = "테스트";
-        Integer price = 10003;
+        Integer price = 10005;
         String itemSellStatus = "SELL";
 
         QItem item = QItem.item;
@@ -188,5 +191,22 @@ class ItemRepositoryTest {
         for (Item item2 : content) {
             System.out.println(item2);
         }
+    }
+
+    @Test
+    @DisplayName("querydsl 테스트3")
+    public void querydslTest3() {
+        createItemList();
+
+        QItem qItem = QItem.item;
+
+        List<Item> itemList = jpaQueryFactory.select(qItem)
+                .from(qItem)
+                .where(qItem.itemDetail.like("%설명6%"))
+                .orderBy(qItem.price.desc())
+                .limit(5)
+                .fetch();
+
+        itemList.forEach(item -> System.out.println(item));
     }
 }
